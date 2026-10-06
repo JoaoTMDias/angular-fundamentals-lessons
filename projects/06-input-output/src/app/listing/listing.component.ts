@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Car } from '../car';
 
@@ -6,7 +6,15 @@ import { Car } from '../car';
   selector: 'app-listing',
   standalone: true,
   imports: [CommonModule],
-  template: ` <!-- listing markup goes here --> `,
-  styles: ``,
+  templateUrl: "./listing.component.html",
+  styleUrls: ["./listing.component.css"],
 })
-export class ListingComponent {}
+export class ListingComponent {
+  @Input() car!: Car;
+
+  @Output() carSaved = new EventEmitter<Car>();
+
+  handleCarSaved() {
+    this.carSaved.emit(this.car);
+  }
+}

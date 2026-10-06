@@ -1,0 +1,6 @@
+<h1>Saved Cars {{ savedCarList.length }}</h1>
+<section class="container">
+  @for (car of carList; track car.make) {
+    <app-listing [car]="car" (carSaved)="handleCarSaved($event)"></app-listing>
+  }
+</section>
