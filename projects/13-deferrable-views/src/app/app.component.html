@@ -1,0 +1,16 @@
+<section class="container">
+  <h1>Deferrable Views Example</h1>
+  <button #loadPosts>Load Posts</button>
+
+  @defer (on interaction(loadPosts)) {
+    <app-posts />
+  } @loading (after 500ms; minimum 1000ms) {
+    <p>Loading posts...</p>
+  } @placeholder {
+    <p>Posts will be loaded when you click the button.</p>
+  } @error {
+    <p>An error occurred while loading posts.</p>
+  }
+
+
+</section>
