@@ -1,0 +1,14 @@
+ <ul>
+   @for (todo of todos; track todo.id) {
+      <li>
+      <label
+        [ngStyle]="{
+          'text-decoration': todo.completed ? 'line-through' : 'none'
+        }"
+      >
+        <input type="checkbox" [checked]="todo.completed" (change)="handleUpdateTodo(todo)" />
+        {{ todo.title }}
+      </label>
+    </li>
+    }
+ </ul>

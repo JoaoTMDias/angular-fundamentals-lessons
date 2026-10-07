@@ -1,36 +1,36 @@
 import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { TodoFormComponent } from './todo-form/todo-form.component'
+import { TodoListComponent } from './todo-list/todo-list.component';
+import { TodoCounterComponent } from './todo-counter/todo-counter.component';
 import { Todo } from './todo';
-import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule ],
+  imports: [
+    CommonModule,
+    TodoFormComponent,
+    TodoListComponent,
+    TodoCounterComponent,
+  ],
   templateUrl: './app.component.html',
-  styles: `label { display: block }`,
 })
 export class AppComponent {
-  // Form group for the new todo input
-  newTodoForm = new FormGroup({
-    title: new FormControl(''),
-  });
-
   // Signal to store the list of todos
   todos = signal<Todo[]>([
     {
-      id: 1,
+      id: "b76db3b4-d421-408f-981d-6f17aa48ad2d",
       title: "Learn Angular",
       completed: false,
     },
     {
-      id: 2,
+      id: "e5579020-caea-44f8-88d7-7bc6eb023a23",
       title: "Learn TypeScript",
       completed: false,
     },
     {
-      id: 3,
+      id: "79b6b13f-041d-4aa5-b768-f5e24269bed6",
       title: "Learn RxJS",
       completed: false,
     },
@@ -47,7 +47,10 @@ export class AppComponent {
     this.todos.update(todoList => {
       return todoList.map(todoEntry => {
         if (todo.id === todoEntry.id) {
-          todoEntry.completed = !todoEntry.completed;
+          return {
+            ...todoEntry,
+            completed: !todoEntry.completed,
+          }
         }
 
         return todoEntry
@@ -60,17 +63,16 @@ export class AppComponent {
    * @param title The title of the new todo item.
    * @memberof AppComponent
    */
-  handleNewTodo() {
-    const title = this.newTodoForm.get('title')?.value;
+  handleNewTodo(newTodoTitle: string): void {
+    const title = newTodoTitle;
 
     if (title) {
       const newTodo: Todo = {
-        id: Math.max(...this.todos().map(todo => todo.id)) + 1,
+        id: crypto.randomUUID(),
         title,
         completed: false,
       };
       this.todos.update(todoList => [...todoList, newTodo]);
-      this.newTodoForm.reset();
     }
   }
 }

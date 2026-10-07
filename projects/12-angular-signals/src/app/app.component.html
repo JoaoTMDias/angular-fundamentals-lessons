@@ -1,23 +1,4 @@
  <h1>Building a TODO List</h1>
- <form [formGroup]="newTodoForm" (ngSubmit)="handleNewTodo()" >
-   <label>
-     New Todo:
-     <input type="text" formControlName="title" />
-   </label>
-   <button type="submit">Add Todo</button>
- </form>
- <p>Completed Todos: {{ completedTodos().length }}</p>
- <ul>
-   <li>
-    @for (todo of todos(); track todo.id) {
-      <label
-        [ngStyle]="{
-          'text-decoration': todo.completed ? 'line-through' : 'none'
-        }"
-      >
-        <input type="checkbox" [checked]="todo.completed" (change)="updateTodo(todo)" />
-        {{ todo.title }}
-      </label>
-    }
-   </li>
- </ul>
+ <app-todo-form (newTodo)="handleNewTodo($event)"></app-todo-form>
+ <app-todo-counter [completedTodos]="completedTodos"></app-todo-counter>
+ <app-todo-list [todos]="todos()" (updateTodo)="updateTodo($event)"></app-todo-list>
